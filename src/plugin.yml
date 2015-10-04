@@ -1,0 +1,35 @@
+name: GameErauntsiaMC
+version: 1.0
+author: galaipa
+main: io.github.galaipa.GameErauntsiaMC
+depend: []
+commands:
+    wl:
+        description: WhitelistGE pluginaren komando nagusia
+        usage: /wl
+        aliases: []
+        permission: wl.erabili
+        permission-message: Ez daukazu hori egiteko baimenik
+    tutoriala:
+        description: Orrialdean erregistratzeko pausoak azaldu
+        usage: /tutoriala
+        aliases: []
+    laguntza:
+        description: Administratzailei laguntza eskatzeko
+        usage: /laguntza
+        aliases: []
+    arauak:
+        description: Arau zerrenda ikusteko
+        usage: /arauak
+        aliases: []
+    register:
+        description: Zerbitzarian erregistratzeko
+        usage: /register
+        aliases: [erregistratu]
+    login:
+        description: Zerbitzarian sartzeko
+        usage: /login
+        aliases: [sartu]
+permissions:
+    wl.erabili:
+        default: op
