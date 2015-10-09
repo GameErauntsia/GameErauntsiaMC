@@ -38,7 +38,7 @@ public class GameErauntsiaMC extends JavaPlugin {
                 //laguntza(p);
                 return true;
             } else if(args[0].equalsIgnoreCase("zerrenda")){
-                        reloadConfig();
+                       /* reloadConfig();
                         String result = "";
                         int zenbat = 0;
                         for(String izenak : getConfig().getStringList("Jokalariak")){
@@ -49,7 +49,7 @@ public class GameErauntsiaMC extends JavaPlugin {
                             result = result + izenak;
                         }
                         sender.sendMessage("Zerrenda txuria(" + zenbat + "): " + result);
-                        return true;
+                        return true;*/
                     }
                     else if(args[0].equalsIgnoreCase("info")){
                         String jokalaria = args[1].toLowerCase();
@@ -124,11 +124,16 @@ public class GameErauntsiaMC extends JavaPlugin {
             sender.sendMessage(ChatColor.RED + "Dagoeneko bazaude erregistratuta");
             return true;
         }
+        else if(!irakurriJSON("Erabiltzailea",sender.getName().toLowerCase()).get("Uuid").toString().equalsIgnoreCase("null")){
+            sender.sendMessage(ChatColor.RED + "Zure kasuan ez da beharrezkoa");
+            return true;
+        }
         else if((args.length == 0)){
             sender.sendMessage(ChatColor.RED + "Erabilera egokia: /register Pasahitza ErrepikatuPasahitza");
             return true;
         }else if((args.length == 1)){
             sender.sendMessage(ChatColor.RED + "Pasahitza BI aldiz idatzi beharko duzu: /register Pasahitza ErrepikatuPasahitza");
+            return true;
         }else{
             if(args[0].equalsIgnoreCase(args[1])){
                 JSONObject s = irakurriJSON("Erabiltzailea",sender.getName().toLowerCase());
@@ -144,7 +149,11 @@ public class GameErauntsiaMC extends JavaPlugin {
             }
         }
     }else if(cmd.getName().equalsIgnoreCase("login")){
-        if((args.length == 0)){
+        if(!irakurriJSON("Erabiltzailea",sender.getName().toLowerCase()).get("Uuid").toString().equalsIgnoreCase("null")){
+            sender.sendMessage(ChatColor.RED + "Zure kasuan ez da beharrezkoa");
+            return true;
+        }
+        else if((args.length == 0)){
             sender.sendMessage(ChatColor.RED + "Erabilera egokia: /login Pasahitza");
             return true;
         }else{
@@ -155,7 +164,15 @@ public class GameErauntsiaMC extends JavaPlugin {
                     WhiteList.rg.remove((Player) sender);
                     return true;
                 }else{
+                    sender.sendMessage(" ");
+                    sender.sendMessage(" ");
+                    sender.sendMessage(" ");
+                    sender.sendMessage(ChatColor.GREEN + "===================================");
                     sender.sendMessage(ChatColor.RED + "Pasahitz okerra, saiatu berriro");
+                    sender.sendMessage(ChatColor.AQUA + "Admin baten laguntza behar baduzu erabili /laguntza <zergatia>");
+                    sender.sendMessage(ChatColor.GREEN + "===================================");
+                    sender.sendMessage(" ");
+                    sender.sendMessage(" ");
                     return true;
                 }
             }else{

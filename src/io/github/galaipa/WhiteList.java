@@ -13,8 +13,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONObject;
 import ru.tehkode.permissions.PermissionUser;
@@ -42,17 +44,50 @@ public class WhiteList implements Listener {
             if (!event.getFrom().getBlock().equals(event.getTo().getBlock())){
                 event.setTo(event.getFrom());
                 if(irakurriJSON("Erabiltzailea",event.getPlayer().getName().toLowerCase()).get("Pasahitza") != null){
-                        sendTitle(event.getPlayer(),20,20,20,"",ChatColor.GREEN + "Sartzeko erabili /login pasahitza ");
-                        event.getPlayer().sendMessage(ChatColor.GREEN + "Sartzeko erabili /login pasahitza ");
+                        sendTitle(event.getPlayer(),20,40,20,"",ChatColor.GREEN + "Sartzeko erabili /login pasahitza ");
+                        event.getPlayer().sendMessage(" ");
+                        event.getPlayer().sendMessage(" ");
+                        event.getPlayer().sendMessage(" ");
+                        event.getPlayer().sendMessage(ChatColor.GREEN + "==============================================");
+                        event.getPlayer().sendMessage(ChatColor.YELLOW + "Sartzeko erabili /login pasahitza ");
+                        event.getPlayer().sendMessage(ChatColor.AQUA + "Admin baten laguntza behar baduzu erabili /laguntza <zergatia>");
+                        event.getPlayer().sendMessage(ChatColor.GREEN + "==============================================");
+                        event.getPlayer().sendMessage(" ");
+                        event.getPlayer().sendMessage(" ");
                 }else{
-                    sendTitle(event.getPlayer(),20,20,20,"",ChatColor.GREEN + "Erregistratzeko erabili /register pasahitza errepikatuPasahitza");
+                    sendTitle(event.getPlayer(),20,40,20,"",ChatColor.GREEN + "Erregistratzeko erabili /register pasahitza errepikatuPasahitza");
+                    event.getPlayer().sendMessage(" ");
+                    event.getPlayer().sendMessage(" ");
+                    event.getPlayer().sendMessage(" ");
+                    event.getPlayer().sendMessage(ChatColor.GREEN + "===================================");
                     event.getPlayer().sendMessage(ChatColor.GREEN + "Erregistratzeko erabili /register pasahitza errepikatuPasahitza");
+                    event.getPlayer().sendMessage(ChatColor.AQUA + "Admin baten laguntza behar baduzu erabili /laguntza <zergatia>");
+                    event.getPlayer().sendMessage(ChatColor.GREEN + "===================================");
+                    event.getPlayer().sendMessage(" ");
+                    event.getPlayer().sendMessage(" ");
                 }
             }
             
         }
     }
-    public  void PlayerJoin(String player){
+    @EventHandler
+     public void PlayerCommand(PlayerCommandPreprocessEvent event) {
+          Player p = event.getPlayer();
+          if(rg.contains(event.getPlayer())){
+              if(!event.getMessage().toLowerCase().startsWith("/register")){
+                 if(!event.getMessage().toLowerCase().startsWith("/login")){
+                     if(!event.getMessage().toLowerCase().startsWith("/laguntza")){
+                      event.getPlayer().sendMessage(ChatColor.RED + "Ezin duzu hori egin!");
+                      event.setCancelled(true);
+          }
+              }}}}
+    @EventHandler
+     public void PlayerLeave(PlayerQuitEvent event) {
+         if(rg.contains(event.getPlayer())){
+             rg.remove(event.getPlayer());
+         }
+     }
+    public void PlayerJoin(String player){
         player = player.toLowerCase();
         if(zerrendan(player)){ //Zerrendan dago
             System.out.println(player + " erabiltzailea zerrenda txurian dago");
