@@ -21,6 +21,7 @@ Adminenak:
     /wl ezabatu <jokalaria> (Jokalaria zerrendatik ezabatzeko)
     /wl info <jokalaria> (Jokalari baten informazio eskuratzeko)
     /wl point Spawn/Errorea (Spawn eta errore telegarraitze puntuak ezartzeko)
+    /wl zerrenda (Jokalari zerrenda ikusteko)
   
 ## Laguntza
 Jokalariek batek laguntza behar duenean komando baten bitartez administratzaileei Telegram bidez abisatzeko aukera izango du. Horretarako ondorengo komandoa erabiliz:

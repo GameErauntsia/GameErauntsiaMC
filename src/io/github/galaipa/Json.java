@@ -67,5 +67,16 @@ public class Json {
           }
         } catch (Exception e) {}
         return null;
+    }public static  JSONArray zerrendaJSON() {
+        try {
+          JSONParser parser = new JSONParser();
+          File file = new File(pluginFolder + File.separator + "jokalariak.json");
+          Object jokalari = parser.parse(new FileReader(file));
+          if(jokalari != null && jokalari instanceof JSONArray){
+              return (JSONArray) jokalari;
+          }
+        } catch (Exception e) {}
+        return null;
     }
+    
 }

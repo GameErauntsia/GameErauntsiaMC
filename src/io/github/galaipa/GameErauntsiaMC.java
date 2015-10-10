@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 
@@ -41,59 +42,55 @@ public class GameErauntsiaMC extends JavaPlugin {
                 //laguntza(p);
                 return true;
             } else if(args[0].equalsIgnoreCase("zerrenda")){
-                       /* reloadConfig();
-                        String result = "";
-                        int zenbat = 0;
-                        for(String izenak : getConfig().getStringList("Jokalariak")){
-                            if (result.length() > 0) {
-                                result = result + ", ";
-                                zenbat++;
-                            }
-                            result = result + izenak;
-                        }
-                        sender.sendMessage("Zerrenda txuria(" + zenbat + "): " + result);
-                        return true;*/
+                JSONArray jokalariak = Json.zerrendaJSON();
+                
+                String s = "";
+                   for (Object jokalariak1 : jokalariak ) {
+                      JSONObject o = (JSONObject) jokalariak1;      
+                       s= s + ", "+ o.get("Erabiltzailea");
+                      }
+                sender.sendMessage(ChatColor.GREEN + "Jokalari zerrenda("+ jokalariak.size()+ "): "+ ChatColor.YELLOW+ s);
                     }
-                    else if(args[0].equalsIgnoreCase("info")){
-                        String jokalaria = args[1].toLowerCase();
-                        String msg = Json.irakurriJSON("Erabiltzailea",jokalaria).toString();
-                        sender.sendMessage(msg);
+            else if(args[0].equalsIgnoreCase("info")){
+                String jokalaria = args[1].toLowerCase();
+                String msg = Json.irakurriJSON("Erabiltzailea",jokalaria).toString();
+                sender.sendMessage(msg);
+            return true;
+            }
+            else if(args[0].equalsIgnoreCase("ezabatu")){
+                String jokalaria = args[1].toLowerCase();
+                Json.ezabatuJSON(jokalaria);
+                sender.sendMessage(ChatColor.RED + jokalaria + " jokalaria zerrendatik ezabatu duzu");
+                return true;
+            }
+            else if(args[0].equalsIgnoreCase("gehitu")){
+                return true;
+            }
+            else if(args[0].equalsIgnoreCase("point")){
+                Player p = (Player) sender;
+                SaveSpawn(p.getLocation(),args[1]);
+                sender.sendMessage("Spawn puntua gorde duzu");
+                return true;
+            }else if(args[0].equalsIgnoreCase("telegram")){
+                Boolean b = getConfig().getBoolean("Telegram");
+                if(b){
+                    getConfig().set("Telegram",false);
+                    saveConfig();
+                    WhiteList.telegram = false;
+                    sender.sendMessage(ChatColor.RED + "Telegram jakinarazpenak ezgaitu dituzu");
                     return true;
-                    }
-                    else if(args[0].equalsIgnoreCase("ezabatu")){
-                        String jokalaria = args[1].toLowerCase();
-                        Json.ezabatuJSON(jokalaria);
-                        sender.sendMessage(ChatColor.RED + jokalaria + " jokalaria zerrendatik ezabatu duzu");
-                        return true;
-                    }
-                    else if(args[0].equalsIgnoreCase("gehitu")){
-                        return true;
-                    }
-                    else if(args[0].equalsIgnoreCase("point")){
-                        Player p = (Player) sender;
-                        SaveSpawn(p.getLocation(),args[1]);
-                        sender.sendMessage("Spawn puntua gorde duzu");
-                        return true;
-                    }else if(args[0].equalsIgnoreCase("telegram")){
-                        Boolean b = getConfig().getBoolean("Telegram");
-                        if(b){
-                            getConfig().set("Telegram",false);
-                            saveConfig();
-                            WhiteList.telegram = false;
-                            sender.sendMessage(ChatColor.RED + "Telegram jakinarazpenak ezgaitu dituzu");
-                            return true;
-                        }else{
-                            getConfig().set("Telegram",true);
-                            saveConfig();
-                            WhiteList.telegram = true;
-                            sender.sendMessage(ChatColor.GREEN + "Telegram jakinarazpenak gaitu dituzu");
-                            return true;
-                        }
-                    }
-                    else{
-                            sender.sendMessage("WhitelistGE");
-                        return true;
-                    }
+                }else{
+                    getConfig().set("Telegram",true);
+                    saveConfig();
+                    WhiteList.telegram = true;
+                    sender.sendMessage(ChatColor.GREEN + "Telegram jakinarazpenak gaitu dituzu");
+                    return true;
+                }
+            }
+            else{
+                    sender.sendMessage("WhitelistGE");
+                return true;
+            }
     }else  if (cmd.getName().equalsIgnoreCase("tutoriala")) {
         WhiteList.tutoriala((Player) sender);
         return true;
