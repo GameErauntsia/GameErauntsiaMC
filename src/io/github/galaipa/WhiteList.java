@@ -1,11 +1,12 @@
 package io.github.galaipa;
 
+import static io.github.galaipa.GameErauntsiaMC.perms;
 import static io.github.galaipa.Json.irakurriJSON;
 import java.util.ArrayList;
+import java.util.Iterator;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -19,10 +20,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONObject;
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
-
-
 
 
 public class WhiteList implements Listener {
@@ -34,9 +31,9 @@ public class WhiteList implements Listener {
     public WhiteList(GameErauntsiaMC instance) {
             plugin = instance;
         }
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler//(priority = EventPriority.LOW)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        PlayerJoin(event.getPlayer().getName()); // Jokalaria sartzen denean exekutatu
+        PlayerJoin(event.getPlayer()); // Jokalaria sartzen denean exekutatu
     }
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerMove(PlayerMoveEvent event) {
@@ -83,76 +80,68 @@ public class WhiteList implements Listener {
               }}}}
     @EventHandler
      public void PlayerLeave(PlayerQuitEvent event) {
-         if(rg.contains(event.getPlayer())){
-             rg.remove(event.getPlayer());
-         }
+        Iterator<Player> iterator = rg.iterator();
+        while(iterator.hasNext()){
+            Player value = iterator.next();
+            if (event.getPlayer().equals(value)){
+                iterator.remove();
+                //rg.remove(event.getPlayer());
+                break;
+            }
+}
      }
-    public void PlayerJoin(String player){
-        player = player.toLowerCase();
-        if(zerrendan(player)){ //Zerrendan dago
+    public void PlayerJoin(Player player){
+        String izena = player.getName().toLowerCase();
+        if(Json.irakurriJSON("Erabiltzailea",izena) != null){ //Zerrendan al dago ?
             System.out.println(player + " erabiltzailea zerrenda txurian dago");
            // registerMezua(Bukkit.getServer().getPlayer(player));
-            if(irakurriJSON("Erabiltzailea",player.toLowerCase()).get("Uuid").toString().equalsIgnoreCase("null")){
-                rg.add(Bukkit.getServer().getPlayer(player));
+            if(irakurriJSON("Erabiltzailea",izena).get("Uuid").toString().equalsIgnoreCase("null")){
+                rg.add(player);
             }
             return;
-        }else if(WebAPI.web(player, "mc_user") != null){ //Ez dago zerrendan baina bai erregistratuta
+        }else if(WebAPI.web(izena, "mc_user") != null){ //Ez dago zerrendan baina bai erregistratuta
             //Jokalaria zerrendan gorde
-                JSONObject s = irakurriJSON("GameErauntsia",WebAPI.web(player, "user"));
+                JSONObject s = irakurriJSON("GameErauntsia",WebAPI.web(izena, "user"));
                 if(s!=null){ //Erabitzaileak izen aldaketa bat egin du
                     System.out.println(player + " erabiltzaileak izen aldaketa egin du. Izen zaharra: " + s.get("Erabiltzailea").toString());
                     Json.ezabatuJSON(s.get("Erabiltzailea").toString());
                     s.remove("Erabiltzailea");
-                    s.put("Erabiltzailea", player.toLowerCase());
+                    s.put("Erabiltzailea", izena);
                 }else{
                // JSONArray Jokalariak = new JSONArray();
                 s = new JSONObject();
-                s.put("Erabiltzailea", player.toLowerCase());
-                s.put("Uuid", WebAPI.web(player, "uuid"));
-                s.put("GameErauntsia", WebAPI.web(player, "user"));
+                s.put("Erabiltzailea", izena);
+                s.put("Uuid", WebAPI.web(izena, "uuid"));
+                s.put("GameErauntsia", WebAPI.web(izena, "user"));
                 System.out.println("Erabiltzaile berri bat gehitu da zerrendara: " + player);
                 //Jokalariak.add(s);
                 }
-                Json.idatziJSON(s,player,false);
+                Json.idatziJSON(s,izena,false);
                 //registerMezua(Bukkit.getServer().getPlayer(player));
             // Pantaitik mezua kendu
-                sendTitle(Bukkit.getServer().getPlayer(player),2,2,2,"","");
+                sendTitle(player,2,2,2,"","");
             //Baimenak eman
-                 PermissionUser user = PermissionsEx.getUser(player);
-                 user.addGroup(taldea(player));
-            //Errore zerrendatik ezabatu
+                perms.playerAddGroup(player, taldea(izena));
 
+              /*   PermissionUser user = PermissionsEx.getUser(player);
+                 user.addGroup(taldea(izena));*/
             // Jokalaria telegarraiatu
-                Bukkit.getServer().getPlayer(player).teleport(spawn);
-        }
-        else{ // Erabiltzailea ez dago zerrendan eta ez dago erregistratuta
+                player.teleport(spawn);
+        }else{ // Erabiltzailea ez dago zerrendan eta ez dago erregistratuta
             System.out.println(player + " erabiltzailea ez dago webgunean erregistratuta edo errorea gertatu da");
             if(telegram){
-                WebAPI.telegramBidali("Erregistratu gabeko jokalaria",player);
+                WebAPI.telegramBidali("Erregistratu gabeko jokalaria",izena);
             }
             // Errore zerrendara gehitu
             //Laguntza mezuak erakutsi
-            laguntza(Bukkit.getServer().getPlayer(player));
+            laguntza(player);
             // Jokalaria telegarraiatu
-            Bukkit.getServer().getPlayer(player).teleport(errorea);
+            player.teleport(errorea);
             System.out.println(player + " erabiltzailea ez dago webgunean erregistratuta edo errorea gertatu da");
         }
     }
     
-    public Boolean erregistratuta(String player){ // Jokalaria erregistratuta al dago?
-        if(WebAPI.web(player, "mc_user") != null){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    public Boolean zerrendan(String player){ // Jokalaria zerrendan al dago?
-        if(Json.irakurriJSON("Erabiltzailea",player) != null){
-            return true;
-        }
-        return false;
-    }
-    public String taldea(String player){ // Zer taldetan dago jokalaria?
+public String taldea(String player){ // Zer taldetan dago jokalaria?
         String rol = WebAPI.web(player,"rol");
         String taldea = null;
         switch (rol) {

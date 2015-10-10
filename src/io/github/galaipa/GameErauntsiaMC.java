@@ -2,12 +2,14 @@
 package io.github.galaipa;
 
 import static io.github.galaipa.Json.irakurriJSON;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONObject;
 
@@ -23,6 +25,7 @@ public class GameErauntsiaMC extends JavaPlugin {
             loadSpawn();
         }
         WhiteList.telegram = getConfig().getBoolean("Telegram");
+        setupPermissions();
         System.out.println("GameErauntsiaMC piztu da!");
     }   
     @Override
@@ -211,4 +214,10 @@ public class GameErauntsiaMC extends JavaPlugin {
         }String allArgs = sb.toString().trim();
         return allArgs;
      }
+    public static Permission perms = null;
+    private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+        return perms != null;
+    }
 }

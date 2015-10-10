@@ -28,7 +28,7 @@ public class Json {
                 jokalariak = (JSONArray) jokalari;
                 if(berretsi){
                 for (int i = 0; i < jokalariak.size(); i++) {
-                  JSONObject o = (JSONObject) jokalariak.get(i);;
+                  JSONObject o = (JSONObject) jokalariak.get(i);
                   if(o.get("Erabiltzailea").equals(jokalaria)){
                       jokalariak.remove(o);
                   }
@@ -43,7 +43,7 @@ public class Json {
             fileWriter.flush(); 
             fileWriter.close(); 
             
-    } catch (IOException | ParseException e) {e.printStackTrace();}
+    } catch (IOException | ParseException e) {}
     }public static void ezabatuJSON(String jokalaria) {
         if(jokalaria != null){
             idatziJSON(null,jokalaria,true);
@@ -58,12 +58,12 @@ public class Json {
 
           if(jokalari != null && jokalari instanceof JSONArray){
               jokalariak = (JSONArray) jokalari;
-              for (int i = 0; i < jokalariak.size(); i++) {
-                  JSONObject o = (JSONObject) jokalariak.get(i);
+              for (Object jokalariak1 : jokalariak) {
+                  JSONObject o = (JSONObject) jokalariak1;
                   if(o.get(gakoa).equals(jokalaria)){
                       return o;
                   }
-                }
+              }
           }
         } catch (Exception e) {}
         return null;

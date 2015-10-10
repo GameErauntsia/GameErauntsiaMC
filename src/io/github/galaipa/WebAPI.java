@@ -25,7 +25,7 @@ public class WebAPI {
 
             String inputLine;
             while ((inputLine = br.readLine()) != null) {
-                    System.out.println(inputLine);
+                    //System.out.println(inputLine);
                     if(inputLine.equalsIgnoreCase("true")){
                         return true;
                     }
@@ -63,7 +63,6 @@ public class WebAPI {
             return (String) jo.get(zer);
             }
             catch(Exception e){
-
                   return null; 
             }
       }

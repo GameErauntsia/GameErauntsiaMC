@@ -1,8 +1,8 @@
 name: GameErauntsiaMC
-version: 1.0
+version: 2.0
 author: galaipa
 main: io.github.galaipa.GameErauntsiaMC
-depend: []
+depend: [Vault]
 commands:
     wl:
         description: WhitelistGE pluginaren komando nagusia
