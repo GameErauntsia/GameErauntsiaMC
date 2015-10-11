@@ -121,7 +121,7 @@ public class WhiteList implements Listener {
             // Pantaitik mezua kendu
                 sendTitle(player,2,2,2,"","");
             //Baimenak eman
-                perms.playerAddGroup(player, taldea(izena));
+                perms.playerAddGroup(null,player, taldea(izena));
 
               /*   PermissionUser user = PermissionsEx.getUser(player);
                  user.addGroup(taldea(izena));*/
