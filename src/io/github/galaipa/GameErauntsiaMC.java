@@ -124,7 +124,7 @@ public class GameErauntsiaMC extends JavaPlugin {
             sender.sendMessage(ChatColor.RED + "Dagoeneko bazaude erregistratuta");
             return true;
         }
-        else if(!irakurriJSON("Erabiltzailea",sender.getName().toLowerCase()).get("Uuid").toString().equalsIgnoreCase("null")){
+        else if(irakurriJSON("Erabiltzailea",sender.getName().toLowerCase()).get("Uuid") != null){
             sender.sendMessage(ChatColor.RED + "Zure kasuan ez da beharrezkoa");
             return true;
         }
@@ -134,7 +134,7 @@ public class GameErauntsiaMC extends JavaPlugin {
         }else if((args.length == 1)){
             sender.sendMessage(ChatColor.RED + "Pasahitza BI aldiz idatzi beharko duzu: /register Pasahitza ErrepikatuPasahitza");
             return true;
-        }else{
+        }else{ 
             if(args[0].equalsIgnoreCase(args[1])){
                 JSONObject s = irakurriJSON("Erabiltzailea",sender.getName().toLowerCase());
                 Json.ezabatuJSON(s.get("Erabiltzailea").toString());
@@ -149,7 +149,7 @@ public class GameErauntsiaMC extends JavaPlugin {
             }
         }
     }else if(cmd.getName().equalsIgnoreCase("login")){
-        if(!irakurriJSON("Erabiltzailea",sender.getName().toLowerCase()).get("Uuid").toString().equalsIgnoreCase("null")){
+        if(irakurriJSON("Erabiltzailea",sender.getName().toLowerCase()).get("Uuid") != null){
             sender.sendMessage(ChatColor.RED + "Zure kasuan ez da beharrezkoa");
             return true;
         }
@@ -158,7 +158,7 @@ public class GameErauntsiaMC extends JavaPlugin {
             return true;
         }else{
             String pass = irakurriJSON("Erabiltzailea",sender.getName().toLowerCase()).get("Pasahitza").toString();
-            if(pass !=null){
+            if(pass != null){
                 if(args[0].equalsIgnoreCase(pass)){
                     sender.sendMessage(ChatColor.GREEN + "Pasahitz zuzena");
                     WhiteList.rg.remove((Player) sender);

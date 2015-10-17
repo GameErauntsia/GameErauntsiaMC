@@ -15,6 +15,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -67,6 +69,18 @@ public class WhiteList implements Listener {
             
         }
     }
+    @EventHandler(priority = EventPriority.LOW)
+    public void blockInteract(PlayerInteractEvent event) {
+        if(rg.contains(event.getPlayer())){
+            event.setCancelled(true);
+        }
+    }
+    @EventHandler(priority = EventPriority.LOW)
+    public void blockInteract(PlayerDropItemEvent event) {
+        if(rg.contains(event.getPlayer())){
+            event.setCancelled(true);
+        }
+    }
     @EventHandler
      public void PlayerCommand(PlayerCommandPreprocessEvent event) {
           Player p = event.getPlayer();
@@ -95,7 +109,7 @@ public class WhiteList implements Listener {
         if(Json.irakurriJSON("Erabiltzailea",izena) != null){ //Zerrendan al dago ?
             System.out.println(player + " erabiltzailea zerrenda txurian dago");
            // registerMezua(Bukkit.getServer().getPlayer(player));
-            if(irakurriJSON("Erabiltzailea",izena).get("Uuid").toString().equalsIgnoreCase("null")){
+            if(irakurriJSON("Erabiltzailea",izena).get("Uuid") == null){
                 rg.add(player);
             }
             return;
