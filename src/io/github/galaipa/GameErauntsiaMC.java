@@ -37,7 +37,7 @@ public class GameErauntsiaMC extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
         if (cmd.getName().equalsIgnoreCase("wl")) {
             if((args.length < 1)){
-                sender.sendMessage("WhitelistGE");
+                sender.sendMessage(ChatColor.GREEN + "GameErauntsiaMC");
                 Player  p = (Player) sender;
                 //laguntza(p);
                 return true;
@@ -57,9 +57,20 @@ public class GameErauntsiaMC extends JavaPlugin {
                 return true;
                     }
             else if(args[0].equalsIgnoreCase("info")){
+                if(args.length < 2){
+                    sender.sendMessage(ChatColor.RED + "Erabilera egokia: /wl info <JokalariarenIzena>");
+                    return true;
+                }
                 String jokalaria = args[1].toLowerCase();
-                String msg = Json.irakurriJSON("Erabiltzailea",jokalaria).toString();
-                sender.sendMessage(msg);
+                JSONObject msg = Json.irakurriJSON("Erabiltzailea",jokalaria);
+                if(msg != null){
+                  //  sender.sendMessage(msg.toString());
+                    sender.sendMessage(ChatColor.YELLOW + "Jokalaria: " + ChatColor.BLUE+ msg.get("Erabiltzailea"));
+                    sender.sendMessage(ChatColor.YELLOW + "GE kontua: " + ChatColor.BLUE+ msg.get("GameErauntsia"));
+                    sender.sendMessage(ChatColor.YELLOW + "Uuid: " + ChatColor.BLUE+ msg.get("Uuid"));
+                }else{
+                    sender.sendMessage(ChatColor.RED + "Jokalaria ez da aurkitu");
+                }
             return true;
             }
             else if(args[0].equalsIgnoreCase("ezabatu")){
