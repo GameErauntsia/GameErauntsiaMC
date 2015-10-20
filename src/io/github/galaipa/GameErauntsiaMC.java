@@ -46,10 +46,15 @@ public class GameErauntsiaMC extends JavaPlugin {
                 
                 String s = "";
                    for (Object jokalariak1 : jokalariak ) {
-                      JSONObject o = (JSONObject) jokalariak1;      
-                       s= s + ", "+ o.get("Erabiltzailea");
+                      JSONObject o = (JSONObject) jokalariak1;   
+                      if(o.get("Uuid") != null){
+                       s= s + ", "+ ChatColor.GREEN + o.get("Erabiltzailea");
+                      }else{
+                       s= s + ", "+ ChatColor.RED + o.get("Erabiltzailea");
                       }
-                sender.sendMessage(ChatColor.GREEN + "Jokalari zerrenda("+ jokalariak.size()+ "): "+ ChatColor.YELLOW+ s);
+                      }
+                sender.sendMessage(ChatColor.AQUA + "Jokalari zerrenda("+ jokalariak.size()+ "): "+  s);
+                return true;
                     }
             else if(args[0].equalsIgnoreCase("info")){
                 String jokalaria = args[1].toLowerCase();
