@@ -68,6 +68,9 @@ public class GameErauntsiaMC extends JavaPlugin {
                     sender.sendMessage(ChatColor.YELLOW + "Jokalaria: " + ChatColor.BLUE+ msg.get("Erabiltzailea"));
                     sender.sendMessage(ChatColor.YELLOW + "GE kontua: " + ChatColor.BLUE+ msg.get("GameErauntsia"));
                     sender.sendMessage(ChatColor.YELLOW + "Uuid: " + ChatColor.BLUE+ msg.get("Uuid"));
+                    if(msg.get("Pasahitza") != null){
+                        sender.sendMessage(ChatColor.YELLOW + "Jokalaria erregistratuta dago");
+                    }
                 }else{
                     sender.sendMessage(ChatColor.RED + "Jokalaria ez da aurkitu");
                 }
