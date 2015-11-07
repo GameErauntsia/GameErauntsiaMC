@@ -39,7 +39,7 @@ public class WebAPI {
         }
         return false;
     }
-    public static String web(String name, String zer){
+    public static JSONObject web(String name){
         StringBuilder content = new StringBuilder();
         try
     {
@@ -47,7 +47,6 @@ public class WebAPI {
             URLConnection urlConnection = url.openConnection();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String line;
-           
             while ((line = bufferedReader.readLine()) != null){
             content.append(line + "\n");
           }
@@ -58,9 +57,8 @@ public class WebAPI {
         }
             try{
             String lortu = content.toString();
-            JSONParser parser = new JSONParser();
-            JSONObject jo = (JSONObject) parser.parse(lortu);
-            return (String) jo.get(zer);
+            JSONObject jo = (JSONObject) new JSONParser().parse(lortu);
+            return jo;
             }
             catch(Exception e){
                   return null; 

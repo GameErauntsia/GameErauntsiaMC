@@ -29,7 +29,9 @@ public class Json {
                 if(berretsi){
                 for (int i = 0; i < jokalariak.size(); i++) {
                   JSONObject o = (JSONObject) jokalariak.get(i);
-                  if(o.get("Erabiltzailea").equals(jokalaria)){
+                  if(o.get("mc_user").equals(jokalaria)){
+                      jokalariak.remove(o);
+                  }else if(o.get("user").equals(jokalaria)){
                       jokalariak.remove(o);
                   }
                 }
@@ -60,10 +62,11 @@ public class Json {
               jokalariak = (JSONArray) jokalari;
               for (Object jokalariak1 : jokalariak) {
                   JSONObject o = (JSONObject) jokalariak1;
-                  if(o.get(gakoa).equals(jokalaria)){
+                  if(o.get(gakoa).toString().equalsIgnoreCase(jokalaria)){
                       return o;
                   }
               }
+          }else{
           }
         } catch (Exception e) {}
         return null;

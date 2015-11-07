@@ -1,5 +1,5 @@
 name: GameErauntsiaMC
-version: 2.0
+version: 3.0
 author: galaipa
 main: io.github.galaipa.GameErauntsiaMC
 depend: [Vault]

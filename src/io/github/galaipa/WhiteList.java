@@ -42,7 +42,7 @@ public class WhiteList implements Listener {
         if(rg.contains(event.getPlayer())){
             if (!event.getFrom().getBlock().equals(event.getTo().getBlock())){
                 event.setTo(event.getFrom());
-                if(irakurriJSON("Erabiltzailea",event.getPlayer().getName().toLowerCase()).get("Pasahitza") != null){
+                if(irakurriJSON("mc_user",event.getPlayer().getName().toLowerCase()).get("Pasahitza") != null){
                         sendTitle(event.getPlayer(),20,40,20,"",ChatColor.GREEN + "Sartzeko erabili /login pasahitza ");
                         event.getPlayer().sendMessage(" ");
                         event.getPlayer().sendMessage(" ");
@@ -106,57 +106,54 @@ public class WhiteList implements Listener {
      }
     public void PlayerJoin(Player player){
         String izena = player.getName().toLowerCase();
-        if(Json.irakurriJSON("Erabiltzailea",izena) != null){ //Zerrendan al dago ?
+        if(Json.irakurriJSON("mc_user",izena) != null){ //Zerrendan al dago ?
             System.out.println(player + " erabiltzailea zerrenda txurian dago");
            // registerMezua(Bukkit.getServer().getPlayer(player));
-            if(irakurriJSON("Erabiltzailea",izena).get("Uuid") == null){
+            if(irakurriJSON("mc_user",izena).get("uuid") == null){
                 rg.add(player);
             }
             return;
-        }else if(WebAPI.web(izena, "mc_user") != null){ //Ez dago zerrendan baina bai erregistratuta
-            //Jokalaria zerrendan gorde
-                JSONObject s = irakurriJSON("GameErauntsia",WebAPI.web(izena, "user"));
-                if(s!=null){ //Erabitzaileak izen aldaketa bat egin du
-                    System.out.println(player + " erabiltzaileak izen aldaketa egin du. Izen zaharra: " + s.get("Erabiltzailea").toString());
-                    Json.ezabatuJSON(s.get("Erabiltzailea").toString());
-                    s.remove("Erabiltzailea");
-                    s.put("Erabiltzailea", izena);
-                }else{
-               // JSONArray Jokalariak = new JSONArray();
-                s = new JSONObject();
-                s.put("Erabiltzailea", izena);
-                s.put("Uuid", WebAPI.web(izena, "uuid"));
-                s.put("GameErauntsia", WebAPI.web(izena, "user"));
-                System.out.println("Erabiltzaile berri bat gehitu da zerrendara: " + player);
-                //Jokalariak.add(s);
+        }
+        else{
+            JSONObject orrialdea = WebAPI.web(izena);
+            if(orrialdea != null){ //Ez dago zerrendan baina bai erregistratuta
+                //Jokalaria zerrendan gorde
+                    JSONObject s = irakurriJSON("user",orrialdea.get("user").toString());
+                    if(s!=null){ //Erabitzaileak izen aldaketa bat egin du
+                        System.out.println(player + " erabiltzaileak izen aldaketa egin du. Izen zaharra: " + s.get("mc_user").toString());
+                        Json.ezabatuJSON(s.get("user").toString());
+                        s.remove("mc_user");
+                        s.remove("uuid");
+                        s.put("mc_user", izena);
+                        s.put("uuid", orrialdea.get("uuid").toString());
+                        Json.idatziJSON(s,izena,false);
+                    }else{
+                        Json.idatziJSON(orrialdea,izena,false);
+                        System.out.println("Erabiltzaile berri bat gehitu da zerrendara: " + player); 
+                    }
+                // Pantaitik mezua kendu
+                    sendTitle(player,2,2,2,"","");
+                //Baimenak eman
+                    perms.playerAddGroup(null,player, taldea(orrialdea));
+                // Jokalaria telegarraiatu
+                    player.teleport(spawn);
+            }else{ // Erabiltzailea ez dago zerrendan eta ez dago erregistratuta
+                System.out.println(player + " erabiltzailea ez dago webgunean erregistratuta edo errorea gertatu da");
+                if(telegram){
+                    WebAPI.telegramBidali("Erregistratu gabeko jokalaria",izena);
                 }
-                Json.idatziJSON(s,izena,false);
-                //registerMezua(Bukkit.getServer().getPlayer(player));
-            // Pantaitik mezua kendu
-                sendTitle(player,2,2,2,"","");
-            //Baimenak eman
-                perms.playerAddGroup(null,player, taldea(izena));
-
-              /*   PermissionUser user = PermissionsEx.getUser(player);
-                 user.addGroup(taldea(izena));*/
-            // Jokalaria telegarraiatu
-                player.teleport(spawn);
-        }else{ // Erabiltzailea ez dago zerrendan eta ez dago erregistratuta
-            System.out.println(player + " erabiltzailea ez dago webgunean erregistratuta edo errorea gertatu da");
-            if(telegram){
-                WebAPI.telegramBidali("Erregistratu gabeko jokalaria",izena);
+                // Errore zerrendara gehitu
+                //Laguntza mezuak erakutsi
+                laguntza(player);
+                // Jokalaria telegarraiatu
+                player.teleport(errorea);
+                System.out.println(player + " erabiltzailea ez dago webgunean erregistratuta edo errorea gertatu da");
             }
-            // Errore zerrendara gehitu
-            //Laguntza mezuak erakutsi
-            laguntza(player);
-            // Jokalaria telegarraiatu
-            player.teleport(errorea);
-            System.out.println(player + " erabiltzailea ez dago webgunean erregistratuta edo errorea gertatu da");
         }
     }
     
-public String taldea(String player){ // Zer taldetan dago jokalaria?
-        String rol = WebAPI.web(player,"rol");
+public String taldea(JSONObject t){ // Zer taldetan dago jokalaria?
+        String rol = t.get("rol").toString();
         String taldea = null;
         switch (rol) {
             case "Normal": taldea = "Herritarra";

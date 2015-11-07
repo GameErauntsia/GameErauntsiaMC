@@ -47,10 +47,10 @@ public class GameErauntsiaMC extends JavaPlugin {
                 String s = "";
                    for (Object jokalariak1 : jokalariak ) {
                       JSONObject o = (JSONObject) jokalariak1;   
-                      if(o.get("Uuid") != null){
-                       s= s + ", "+ ChatColor.GREEN + o.get("Erabiltzailea");
+                      if(o.get("uuid") != null){
+                       s= s + ", "+ ChatColor.GREEN + o.get("mc_user");
                       }else{
-                       s= s + ", "+ ChatColor.RED + o.get("Erabiltzailea");
+                       s= s + ", "+ ChatColor.RED + o.get("mc_user");
                       }
                       }
                 sender.sendMessage(ChatColor.AQUA + "Jokalari zerrenda("+ jokalariak.size()+ "): "+  s);
@@ -62,12 +62,14 @@ public class GameErauntsiaMC extends JavaPlugin {
                     return true;
                 }
                 String jokalaria = args[1].toLowerCase();
-                JSONObject msg = Json.irakurriJSON("Erabiltzailea",jokalaria);
+                JSONObject msg = Json.irakurriJSON("mc_user",jokalaria);
                 if(msg != null){
                   //  sender.sendMessage(msg.toString());
-                    sender.sendMessage(ChatColor.YELLOW + "Jokalaria: " + ChatColor.BLUE+ msg.get("Erabiltzailea"));
-                    sender.sendMessage(ChatColor.YELLOW + "GE kontua: " + ChatColor.BLUE+ msg.get("GameErauntsia"));
-                    sender.sendMessage(ChatColor.YELLOW + "Uuid: " + ChatColor.BLUE+ msg.get("Uuid"));
+                    sender.sendMessage(ChatColor.YELLOW + "Jokalaria: " + ChatColor.BLUE+ msg.get("mc_user"));
+                    sender.sendMessage(ChatColor.YELLOW + "GE kontua: " + ChatColor.BLUE+ msg.get("user"));
+                    sender.sendMessage(ChatColor.YELLOW + "Uuid: " + ChatColor.BLUE+ msg.get("uuid"));
+                    sender.sendMessage(ChatColor.YELLOW + "Rol: " + ChatColor.BLUE+ msg.get("rol"));
+                    sender.sendMessage(ChatColor.YELLOW + "Erregistratze data: " + ChatColor.BLUE+ msg.get("created"));
                     if(msg.get("Pasahitza") != null){
                         sender.sendMessage(ChatColor.YELLOW + "Jokalaria erregistratuta dago");
                     }
@@ -139,11 +141,11 @@ public class GameErauntsiaMC extends JavaPlugin {
         return true;
     }
     else if(cmd.getName().equalsIgnoreCase("register")){
-        if(irakurriJSON("Erabiltzailea",sender.getName().toLowerCase()).get("Pasahitza") != null){
+        if(irakurriJSON("mc_user",sender.getName().toLowerCase()).get("Pasahitza") != null){
             sender.sendMessage(ChatColor.RED + "Dagoeneko bazaude erregistratuta");
             return true;
         }
-        else if(irakurriJSON("Erabiltzailea",sender.getName().toLowerCase()).get("Uuid") != null){
+        else if(irakurriJSON("mc_user",sender.getName().toLowerCase()).get("uuid") != null){
             sender.sendMessage(ChatColor.RED + "Zure kasuan ez da beharrezkoa");
             return true;
         }
@@ -155,8 +157,8 @@ public class GameErauntsiaMC extends JavaPlugin {
             return true;
         }else{ 
             if(args[0].equalsIgnoreCase(args[1])){
-                JSONObject s = irakurriJSON("Erabiltzailea",sender.getName().toLowerCase());
-                Json.ezabatuJSON(s.get("Erabiltzailea").toString());
+                JSONObject s = irakurriJSON("mc_user",sender.getName().toLowerCase());
+                Json.ezabatuJSON(s.get("mc_user").toString());
                 s.put("Pasahitza", args[1]);
                 Json.idatziJSON(s,sender.getName().toLowerCase(),false);
                 sender.sendMessage(ChatColor.GREEN + "Mila esker erregistratzeagatik");
@@ -168,7 +170,7 @@ public class GameErauntsiaMC extends JavaPlugin {
             }
         }
     }else if(cmd.getName().equalsIgnoreCase("login")){
-        if(irakurriJSON("Erabiltzailea",sender.getName().toLowerCase()).get("Uuid") != null){
+        if(irakurriJSON("mc_user",sender.getName().toLowerCase()).get("uuid") != null){
             sender.sendMessage(ChatColor.RED + "Zure kasuan ez da beharrezkoa");
             return true;
         }
@@ -176,7 +178,7 @@ public class GameErauntsiaMC extends JavaPlugin {
             sender.sendMessage(ChatColor.RED + "Erabilera egokia: /login Pasahitza");
             return true;
         }else{
-            String pass = irakurriJSON("Erabiltzailea",sender.getName().toLowerCase()).get("Pasahitza").toString();
+            String pass = irakurriJSON("mc_user",sender.getName().toLowerCase()).get("Pasahitza").toString();
             if(pass != null){
                 if(args[0].equalsIgnoreCase(pass)){
                     sender.sendMessage(ChatColor.GREEN + "Pasahitz zuzena");
