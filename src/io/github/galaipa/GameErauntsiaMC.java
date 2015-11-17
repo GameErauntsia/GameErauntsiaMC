@@ -3,6 +3,7 @@ package io.github.galaipa;
 
 import static io.github.galaipa.Json.irakurriJSON;
 import net.milkbowl.vault.permission.Permission;
+import nl.lolmewn.stats.api.StatsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -27,7 +28,8 @@ public class GameErauntsiaMC extends JavaPlugin {
         }
         WhiteList.telegram = getConfig().getBoolean("Telegram");
         setupPermissions();
-        System.out.println("GameErauntsiaMC piztu da!");
+        setupStatsAPI();
+        System.out.println("GameErauntsiaMC piztu da!");;
     }   
     @Override
     public void onDisable() {
@@ -237,5 +239,18 @@ public class GameErauntsiaMC extends JavaPlugin {
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();
         return perms != null;
+    }
+    public static StatsAPI statsAPI;
+    private boolean setupStatsAPI(){
+        RegisteredServiceProvider<StatsAPI> stats = getServer().getServicesManager().getRegistration(nl.lolmewn.stats.api.StatsAPI.class);
+        if (stats!= null) {
+            statsAPI = stats.getProvider();
+            api = new GEAPI(this);
+        }
+        return (statsAPI != null);
+    }
+    private GEAPI api;
+    public GEAPI getAPI() {
+        return api;
     }
 }
