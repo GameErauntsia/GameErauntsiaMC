@@ -29,9 +29,9 @@ public class Json {
                 if(berretsi){
                 for (int i = 0; i < jokalariak.size(); i++) {
                   JSONObject o = (JSONObject) jokalariak.get(i);
-                  if(o.get("mc_user").equals(jokalaria)){
+                  if(o.get("mc_user").toString().toLowerCase().equalsIgnoreCase(jokalaria)){
                       jokalariak.remove(o);
-                  }else if(o.get("user").equals(jokalaria)){
+                  }else if(o.get("user").toString().toLowerCase().equalsIgnoreCase(jokalaria)){
                       jokalariak.remove(o);
                   }
                 }

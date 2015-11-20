@@ -4,7 +4,6 @@ package io.github.galaipa;
 import static io.github.galaipa.Json.irakurriJSON;
 import net.milkbowl.vault.permission.Permission;
 import nl.lolmewn.stats.api.StatsAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -23,10 +22,9 @@ public class GameErauntsiaMC extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new WhiteList(this), this);
         getConfig().options().copyDefaults(true);
         saveConfig();
-        if(getConfig().getString("Spawn.Spawn.World") != null){ //Spawn puntuak kargatuauto uhv
-            loadSpawn();
-        }
         WhiteList.telegram = getConfig().getBoolean("Telegram");
+        WhiteList.errorea = new Location(getServer().getWorld("Jokoak"),970,4,96);
+        WhiteList.spawn =getServer().getWorld("Jokoak").getSpawnLocation();
         setupPermissions();
         setupStatsAPI();
         System.out.println("GameErauntsiaMC piztu da!");;
@@ -89,12 +87,7 @@ public class GameErauntsiaMC extends JavaPlugin {
             else if(args[0].equalsIgnoreCase("gehitu")){
                 return true;
             }
-            else if(args[0].equalsIgnoreCase("point")){
-                Player p = (Player) sender;
-                SaveSpawn(p.getLocation(),args[1]);
-                sender.sendMessage("Spawn puntua gorde duzu");
-                return true;
-            }else if(args[0].equalsIgnoreCase("telegram")){
+            else if(args[0].equalsIgnoreCase("telegram")){
                 Boolean b = getConfig().getBoolean("Telegram");
                 if(b){
                     getConfig().set("Telegram",false);
@@ -207,26 +200,7 @@ public class GameErauntsiaMC extends JavaPlugin {
         return false;
     }
         
-   public  void loadSpawn(){
-        String w = getConfig().getString("Spawn.Spawn.World" );
-        Double x = getConfig().getDouble("Spawn.Spawn.X");
-        Double y= getConfig().getDouble("Spawn.Spawn.Y");
-        Double z = getConfig().getDouble("Spawn.Spawn.Z");
-        WhiteList.spawn = new Location(Bukkit.getServer().getWorld(w), x, y, z);
 
-        String w2 = getConfig().getString("Spawn.Errorea.World");
-        Double x2 = getConfig().getDouble("Spawn.Errorea.X");
-        Double y2 = getConfig().getDouble("Spawn.Errorea.Y");
-        Double z2 = getConfig().getDouble("Spawn.Errorea.Z");
-        WhiteList.errorea = new Location(Bukkit.getServer().getWorld(w2), x2, y2, z2);
-   }
-   public void SaveSpawn(Location l, String s){
-        getConfig().set("Spawn."+ s + ".World", l.getWorld().getName());
-        getConfig().set("Spawn."+ s + ".X", l.getX());
-        getConfig().set("Spawn."+ s + ".Y", l.getY());
-        getConfig().set("Spawn."+ s + ".Z", l.getZ());
-        saveConfig();
-   }
     public static String Args(int nondik, String[] args) {
         StringBuilder sb = new StringBuilder();
         for (int i = nondik; i < args.length; i++){
