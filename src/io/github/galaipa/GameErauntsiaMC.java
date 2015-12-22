@@ -24,7 +24,7 @@ public class GameErauntsiaMC extends JavaPlugin {
         saveConfig();
         WhiteList.telegram = getConfig().getBoolean("Telegram");
         WhiteList.errorea = new Location(getServer().getWorld("Jokoak"),970,4,96);
-        WhiteList.spawn =getServer().getWorld("Jokoak").getSpawnLocation();
+        WhiteList.spawn = getServer().getWorld("Jokoak").getSpawnLocation();
         setupPermissions();
         setupStatsAPI();
         System.out.println("GameErauntsiaMC piztu da!");;
@@ -199,8 +199,6 @@ public class GameErauntsiaMC extends JavaPlugin {
     }
         return false;
     }
-        
-
     public static String Args(int nondik, String[] args) {
         StringBuilder sb = new StringBuilder();
         for (int i = nondik; i < args.length; i++){
