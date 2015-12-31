@@ -2,7 +2,7 @@ name: GameErauntsiaMC
 version: 3.0
 author: galaipa
 main: io.github.galaipa.GameErauntsiaMC
-depend: [Vault,Stats]
+depend: [Vault,Stats,Multiverse-Core]
 commands:
     wl:
         description: WhitelistGE pluginaren komando nagusia
