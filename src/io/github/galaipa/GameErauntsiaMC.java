@@ -23,8 +23,8 @@ public class GameErauntsiaMC extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
         WhiteList.telegram = getConfig().getBoolean("Telegram");
-        WhiteList.errorea = new Location(getServer().getWorld("Jokoak"),970,4,96);
-        WhiteList.spawn = getServer().getWorld("Jokoak").getSpawnLocation();
+        WhiteList.errorea = new Location(getServer().getWorld("World"),970,4,96);
+        WhiteList.spawn = getServer().getWorld("World").getSpawnLocation();
         setupPermissions();
         setupStatsAPI();
         System.out.println("GameErauntsiaMC piztu da!");;
@@ -110,20 +110,19 @@ public class GameErauntsiaMC extends JavaPlugin {
     }else  if (cmd.getName().equalsIgnoreCase("tutoriala")) {
         WhiteList.tutoriala((Player) sender);
         return true;
-    }        if (cmd.getName().equalsIgnoreCase("laguntza")){
-            if(args.length < 1){
+    }else if (cmd.getName().equalsIgnoreCase("laguntza")){
+        if(args.length < 1){
             sender.sendMessage(ChatColor.YELLOW + "/laguntza <zergatia> "+ ChatColor.GREEN + "erabiliz, zerbitzariko administratzailekin kontaktuan jar zaitezke");
             return true;
-            }else{
-               if(WebAPI.telegramBidali(Args(0,args),sender.getName())){
-                   sender.sendMessage(ChatColor.YELLOW + "Laguntza eskaria ondo bidali duzu. Itxaron admin batek eskaera errebisatu arte");
-                   return true;
-               }
-               else{
-                   sender.sendMessage(ChatColor.RED + "Errorea gertatu da laguntza eskaria bidaltzerakoan");
-                   return true;
-               }
-            }
+        }else{
+           if(WebAPI.telegramBidali(Args(0,args),sender.getName())){
+               sender.sendMessage(ChatColor.YELLOW + "Laguntza eskaria ondo bidali duzu. Itxaron admin batek eskaera errebisatu arte");
+               return true;
+           }else{
+               sender.sendMessage(ChatColor.RED + "Errorea gertatu da laguntza eskaria bidaltzerakoan");
+               return true;
+           }
+        }
     }else if (cmd.getName().equalsIgnoreCase("arauak")){
         sender.sendMessage(ChatColor.BLUE +"" + ChatColor.BOLD + "=============================================");
         sender.sendMessage(ChatColor.BLUE +"" + ChatColor.BOLD + "             ZERBITZARIKO ARAUAK (Laburbildua)");
@@ -196,6 +195,16 @@ public class GameErauntsiaMC extends JavaPlugin {
                 return true;
             }
         }
+    }else if(cmd.getName().equalsIgnoreCase("erregistratu")){
+        Player p = (Player) sender;
+        if(WhiteList.erregistroa.containsKey(p)){
+            p.sendMessage(ChatColor.RED + "Erregistroa dagoeneko hasita daukazu, ateratzeko idatzi 'irten'");
+        }else{
+            WhiteList.erregistroa.put(p, p.getName());
+            p.sendMessage(ChatColor.YELLOW + "Game Erauntsia komunitatean erregistratzeko ondorengo datuak sartu beharko dituzu:");
+            p.sendMessage(ChatColor.GREEN + "\u25B6" + "E-posta helbidea:");
+        }
+        return true;
     }
         return false;
     }

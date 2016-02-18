@@ -3,6 +3,7 @@ package io.github.galaipa;
 import static io.github.galaipa.GameErauntsiaMC.perms;
 import static io.github.galaipa.Json.irakurriJSON;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -29,6 +31,7 @@ public class WhiteList implements Listener {
     static Location errorea;
     static Boolean telegram;
     public static ArrayList<Player> rg = new ArrayList();
+    public static HashMap<Player, String> erregistroa = new HashMap<>();
     public GameErauntsiaMC plugin;
     public WhiteList(GameErauntsiaMC instance) {
             plugin = instance;
@@ -42,28 +45,29 @@ public class WhiteList implements Listener {
         if(rg.contains(event.getPlayer())){
             if (!event.getFrom().getBlock().equals(event.getTo().getBlock())){
                 event.setTo(event.getFrom());
+                Player p = event.getPlayer();
                 if(irakurriJSON("mc_user",event.getPlayer().getName().toLowerCase()).get("Pasahitza") != null){
                         sendTitle(event.getPlayer(),20,40,20,"",ChatColor.GREEN + "Sartzeko erabili /login pasahitza ");
-                        event.getPlayer().sendMessage(" ");
-                        event.getPlayer().sendMessage(" ");
-                        event.getPlayer().sendMessage(" ");
-                        event.getPlayer().sendMessage(ChatColor.GREEN + "==============================================");
-                        event.getPlayer().sendMessage(ChatColor.YELLOW + "Sartzeko erabili /login pasahitza ");
-                        event.getPlayer().sendMessage(ChatColor.AQUA + "Admin baten laguntza behar baduzu erabili /laguntza <zergatia>");
-                        event.getPlayer().sendMessage(ChatColor.GREEN + "==============================================");
-                        event.getPlayer().sendMessage(" ");
-                        event.getPlayer().sendMessage(" ");
+                        p.sendMessage(" ");
+                        p.sendMessage(" ");
+                        p.sendMessage(" ");
+                        p.sendMessage(ChatColor.GREEN + "==============================================");
+                        p.sendMessage(ChatColor.YELLOW + "Sartzeko erabili /login pasahitza ");
+                        p.sendMessage(ChatColor.AQUA + "Admin baten laguntza behar baduzu erabili /laguntza <zergatia>");
+                        p.sendMessage(ChatColor.GREEN + "==============================================");
+                        p.sendMessage(" ");
+                        p.sendMessage(" ");
                 }else{
                     sendTitle(event.getPlayer(),20,40,20,"",ChatColor.GREEN + "Erregistratzeko erabili /register pasahitza errepikatuPasahitza");
-                    event.getPlayer().sendMessage(" ");
-                    event.getPlayer().sendMessage(" ");
-                    event.getPlayer().sendMessage(" ");
-                    event.getPlayer().sendMessage(ChatColor.GREEN + "===================================");
-                    event.getPlayer().sendMessage(ChatColor.GREEN + "Erregistratzeko erabili /register pasahitza errepikatuPasahitza");
-                    event.getPlayer().sendMessage(ChatColor.AQUA + "Admin baten laguntza behar baduzu erabili /laguntza <zergatia>");
-                    event.getPlayer().sendMessage(ChatColor.GREEN + "===================================");
-                    event.getPlayer().sendMessage(" ");
-                    event.getPlayer().sendMessage(" ");
+                    p.sendMessage(" ");
+                    p.sendMessage(" ");
+                    p.sendMessage(" ");
+                    p.sendMessage(ChatColor.GREEN + "===================================");
+                    p.sendMessage(ChatColor.GREEN + "Erregistratzeko erabili /register pasahitza errepikatuPasahitza");
+                    p.sendMessage(ChatColor.AQUA + "Admin baten laguntza behar baduzu erabili /laguntza <zergatia>");
+                    p.sendMessage(ChatColor.GREEN + "===================================");
+                    p.sendMessage(" ");
+                    p.sendMessage(" ");
                 }
             }
             
@@ -81,6 +85,57 @@ public class WhiteList implements Listener {
             event.setCancelled(true);
         }
     }
+    @EventHandler
+     public void ErregistroaChatEvent(AsyncPlayerChatEvent event) {
+        Player p = event.getPlayer();
+        if(erregistroa.containsKey(event.getPlayer())){
+            event.setCancelled(true);
+            String mezua = event.getMessage();
+            String kodea = erregistroa.get(p);
+            Integer pausoa = kodea.split("/").length;
+            if(mezua.contains(" ")){
+                p.sendMessage(ChatColor.RED + "Ezin duzu hutsunerik erabili!");
+                return;
+            }else if(mezua.equalsIgnoreCase("/laguntza")){
+                return;
+            }else if(mezua.equalsIgnoreCase("irten")){
+                erregistroa.remove(p);
+                p.sendMessage(ChatColor.RED + "Erregistrotik irten zara");
+                return;
+            }
+            switch(pausoa){
+                case 1:
+                    if(!mezua.contains("@")){
+                      p.sendMessage(ChatColor.RED + "Eposta baliogabea, saiatu berriro");
+                      return;
+                    }
+                    p.sendMessage(ChatColor.GREEN +"\u2713" + ChatColor.YELLOW + mezua);
+                    p.sendMessage(ChatColor.GREEN + "\u25B6" + "Erabiltzaile izena:");
+                    break;
+                case 2:
+                    p.sendMessage(ChatColor.GREEN +"\u2713" + ChatColor.YELLOW + mezua);
+                    p.sendMessage(ChatColor.GREEN + "\u25B6" + "Pasahitza:");
+                    break;
+                case 3:
+                    p.sendMessage(ChatColor.GREEN +"\u2713");
+                    p.sendMessage(ChatColor.GREEN + "\u25B6"  + "Errepikatu pasahitza:");
+                    break;
+                case 4:
+                    if(!kodea.split("/")[3].equalsIgnoreCase(mezua)){
+                         p.sendMessage(ChatColor.RED + "Pasahitzak ez datoz bat, saiatu berriro");
+                         p.sendMessage(ChatColor.GREEN + "Erregistrotik irten eta berriro hasi nahi baduzu idatzi irten");
+                         return;
+                    }
+                    p.sendMessage(ChatColor.GREEN +"\u2713");
+                    p.sendMessage(ChatColor.GREEN + "Mila esker erregistratzeagatik!");
+                    break;
+            }
+            erregistroa.replace(p, kodea + "/" + mezua);
+        }else{
+            event.getRecipients().removeAll(erregistroa.keySet());
+        }
+}
+
     @EventHandler
      public void PlayerCommand(PlayerCommandPreprocessEvent event) {
           Player p = event.getPlayer();
@@ -113,8 +168,7 @@ public class WhiteList implements Listener {
                 rg.add(player);
             }
             return;
-        }
-        else{
+        }else{
             JSONObject orrialdea = WebAPI.web(izena);
             if(orrialdea != null){ //Ez dago zerrendan baina bai erregistratuta
                 //Jokalaria zerrendan gorde
@@ -151,7 +205,6 @@ public class WhiteList implements Listener {
             }
         }
     }
-    
 public String taldea(JSONObject t){ // Zer taldetan dago jokalaria?
         String rol = t.get("rol").toString();
         String taldea = null;
@@ -199,7 +252,8 @@ public String taldea(JSONObject t){ // Zer taldetan dago jokalaria?
                }
            }
        }.runTaskTimer(plugin, 20,20);
-   }public static void tutoriala(Player p){
+   }
+   public static void tutoriala(Player p){
        p.sendMessage(ChatColor.GREEN + "");
        p.sendMessage(ChatColor.GREEN + "");
        p.sendMessage(ChatColor.GREEN + "");
