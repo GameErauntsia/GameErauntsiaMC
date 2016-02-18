@@ -33,3 +33,4 @@ Jokalariek batek laguntza behar duenean komando baten bitartez administratzailee
 Pluginak ematen dizkigun beste aukera batzuk:
 
     /arauak (Zerbitzariko arauak ikusteko)
+    /berriak (Webguneko azken berri eta gameplayak ikusteko)
