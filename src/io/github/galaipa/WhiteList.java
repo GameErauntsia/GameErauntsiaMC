@@ -31,7 +31,6 @@ public class WhiteList implements Listener {
     static Location errorea;
     static Boolean telegram;
     public static ArrayList<Player> rg = new ArrayList();
-    public static HashMap<Player, String> erregistroa = new HashMap<>();
     public GameErauntsiaMC plugin;
     public WhiteList(GameErauntsiaMC instance) {
             plugin = instance;
@@ -85,56 +84,6 @@ public class WhiteList implements Listener {
             event.setCancelled(true);
         }
     }
-    @EventHandler
-     public void ErregistroaChatEvent(AsyncPlayerChatEvent event) {
-        Player p = event.getPlayer();
-        if(erregistroa.containsKey(event.getPlayer())){
-            event.setCancelled(true);
-            String mezua = event.getMessage();
-            String kodea = erregistroa.get(p);
-            Integer pausoa = kodea.split("/").length;
-            if(mezua.contains(" ")){
-                p.sendMessage(ChatColor.RED + "Ezin duzu hutsunerik erabili!");
-                return;
-            }else if(mezua.equalsIgnoreCase("/laguntza")){
-                return;
-            }else if(mezua.equalsIgnoreCase("irten")){
-                erregistroa.remove(p);
-                p.sendMessage(ChatColor.RED + "Erregistrotik irten zara");
-                return;
-            }
-            switch(pausoa){
-                case 1:
-                    if(!mezua.contains("@")){
-                      p.sendMessage(ChatColor.RED + "Eposta baliogabea, saiatu berriro");
-                      return;
-                    }
-                    p.sendMessage(ChatColor.GREEN +"\u2713" + ChatColor.YELLOW + mezua);
-                    p.sendMessage(ChatColor.GREEN + "\u25B6" + "Erabiltzaile izena:");
-                    break;
-                case 2:
-                    p.sendMessage(ChatColor.GREEN +"\u2713" + ChatColor.YELLOW + mezua);
-                    p.sendMessage(ChatColor.GREEN + "\u25B6" + "Pasahitza:");
-                    break;
-                case 3:
-                    p.sendMessage(ChatColor.GREEN +"\u2713");
-                    p.sendMessage(ChatColor.GREEN + "\u25B6"  + "Errepikatu pasahitza:");
-                    break;
-                case 4:
-                    if(!kodea.split("/")[3].equalsIgnoreCase(mezua)){
-                         p.sendMessage(ChatColor.RED + "Pasahitzak ez datoz bat, saiatu berriro");
-                         p.sendMessage(ChatColor.GREEN + "Erregistrotik irten eta berriro hasi nahi baduzu idatzi irten");
-                         return;
-                    }
-                    p.sendMessage(ChatColor.GREEN +"\u2713");
-                    p.sendMessage(ChatColor.GREEN + "Mila esker erregistratzeagatik!");
-                    break;
-            }
-            erregistroa.replace(p, kodea + "/" + mezua);
-        }else{
-            event.getRecipients().removeAll(erregistroa.keySet());
-        }
-}
 
     @EventHandler
      public void PlayerCommand(PlayerCommandPreprocessEvent event) {

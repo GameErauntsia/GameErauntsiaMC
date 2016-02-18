@@ -26,11 +26,7 @@ commands:
     register:
         description: Zerbitzarian erregistratzeko
         usage: /register
-        aliases: []
-    erregistratu:
-        description: Webgunean erregistratzeko
-        usage: /erregistratu
-        aliases: []
+        aliases: [erregistratu]
     login:
         description: Zerbitzarian sartzeko
         usage: /login

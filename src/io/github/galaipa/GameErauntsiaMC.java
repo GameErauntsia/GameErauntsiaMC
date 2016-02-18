@@ -195,16 +195,6 @@ public class GameErauntsiaMC extends JavaPlugin {
                 return true;
             }
         }
-    }else if(cmd.getName().equalsIgnoreCase("erregistratu")){
-        Player p = (Player) sender;
-        if(WhiteList.erregistroa.containsKey(p)){
-            p.sendMessage(ChatColor.RED + "Erregistroa dagoeneko hasita daukazu, ateratzeko idatzi 'irten'");
-        }else{
-            WhiteList.erregistroa.put(p, p.getName());
-            p.sendMessage(ChatColor.YELLOW + "Game Erauntsia komunitatean erregistratzeko ondorengo datuak sartu beharko dituzu:");
-            p.sendMessage(ChatColor.GREEN + "\u25B6" + "E-posta helbidea:");
-        }
-        return true;
     }
         return false;
     }
