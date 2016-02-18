@@ -27,6 +27,7 @@ public class GameErauntsiaMC extends JavaPlugin {
         WhiteList.spawn = getServer().getWorld("World").getSpawnLocation();
         setupPermissions();
         setupStatsAPI();
+        Rss.SchedulerOn();
         System.out.println("GameErauntsiaMC piztu da!");;
     }   
     @Override
