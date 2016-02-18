@@ -28,9 +28,16 @@ Adminenak:
 Jokalariek batek laguntza behar duenean komando baten bitartez administratzaileei Telegram bidez abisatzeko aukera izango du. Horretarako ondorengo komandoa erabiliz:
 
     /laguntza <Zergatia>
+    
+## RSS Irakurgailua
+Webguneko azken berri eta gameplay-ak 30 minututik behin zerbitzarian erakusten ditu. Hemen adibidea:
+![alt tag](https://i.imgur.com/NkoQ54x.png)
+
+    /berriak (Manualki egiteko)
 
 ## Gainerakoak
 Pluginak ematen dizkigun beste aukera batzuk:
 
     /arauak (Zerbitzariko arauak ikusteko)
-    /berriak (Webguneko azken berri eta gameplayak ikusteko)
+
+    
