@@ -19,6 +19,7 @@ Adminenak:
 
     /wl telegram (Telegram jakinarazpenak gaitu / ezgaitzeko)
     /wl ezabatu <jokalaria> (Jokalaria zerrendatik ezabatzeko)
+    /wl gehitu <jokalaria> (Jokalaria zerrendara gehitzeko. Kontuz! "Larrialdietarako" bakarrik erabili)
     /wl info <jokalaria> (Jokalari baten informazio eskuratzeko)
     /wl point Spawn/Errorea (Spawn eta errore telegarraitze puntuak ezartzeko)
     /wl zerrenda (Jokalari zerrenda ikusteko)
