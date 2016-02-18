@@ -6,9 +6,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class RssParser extends DefaultHandler
@@ -29,8 +31,7 @@ public class RssParser extends DefaultHandler
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
    
-    public void parse()
-    {
+    public void parse(){
         InputStream urlInputStream = null;
         SAXParserFactory spf = null;
         SAXParser sp = null;
@@ -47,19 +48,10 @@ public class RssParser extends DefaultHandler
                 sp.parse(urlInputStream, this);
             }
         }
-
-        /*
-         * Exceptions need to be handled
-         * MalformedURLException
-         * ParserConfigurationException
-         * IOException
-         * SAXException
-         */
        
-        catch (Exception e)
+        catch (IOException | ParserConfigurationException | SAXException e)
         {
-            System.out.println("Exception: " + e);
-            e.printStackTrace();
+            System.out.println("RSS Reader Exception: " + e);
         }
         finally
         {

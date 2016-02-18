@@ -2,8 +2,11 @@
 package io.github.galaipa;
 
 import static io.github.galaipa.Json.irakurriJSON;
+import static io.github.galaipa.WhiteList.sendTitle;
+import static io.github.galaipa.WhiteList.spawn;
 import net.milkbowl.vault.permission.Permission;
 import nl.lolmewn.stats.api.StatsAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -27,7 +30,7 @@ public class GameErauntsiaMC extends JavaPlugin {
         WhiteList.spawn = getServer().getWorld("World").getSpawnLocation();
         setupPermissions();
         setupStatsAPI();
-        Rss.SchedulerOn();
+        Rss.SchedulerOn(this);
         System.out.println("GameErauntsiaMC piztu da!");;
     }   
     @Override
@@ -86,6 +89,23 @@ public class GameErauntsiaMC extends JavaPlugin {
                 return true;
             }
             else if(args[0].equalsIgnoreCase("gehitu")){
+                String jokalaria = args[1].toLowerCase();
+                Player player = Bukkit.getPlayer(args[1]);
+                if(player == null || !player.isOnline()){
+                    sender.sendMessage(ChatColor.RED+ jokalaria + " ez dago online");
+                    return true;
+                }
+                JSONObject jo = Json.irakurriJSON("mc_user","AmukelaEH");
+                    jo.remove("mc_user");jo.put("mc_user", jokalaria);
+                    jo.remove("uuid");jo.put("uuid",null);
+                    jo.remove("created");jo.put("created", "Unknown");
+                    jo.remove("user");jo.put("user", "Unknown");
+                    jo.remove("rol");jo.put("rol", "Normal");
+                    Json.idatziJSON(jo,jokalaria,false);
+                sendTitle(player,2,2,2,"","");
+                perms.playerAddGroup(null,player, "Herritarra");
+                player.teleport(spawn);
+                sender.sendMessage(ChatColor.GREEN + jokalaria + " jokalaria zerrendan sartu duzu ");
                 return true;
             }
             else if(args[0].equalsIgnoreCase("telegram")){

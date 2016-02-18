@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -106,6 +107,12 @@ public class WhiteList implements Listener {
             }
 }
      }
+    @EventHandler
+    public void onPlayerDamage(EntityDamageEvent event) {
+        if(event.getEntity() instanceof Player && rg.contains((Player)event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
     public void PlayerJoin(Player player){
         String izena = player.getName().toLowerCase();
         if(Json.irakurriJSON("mc_user",izena) != null){ //Zerrendan al dago ?
