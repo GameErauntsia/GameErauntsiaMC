@@ -3,7 +3,6 @@ package io.github.galaipa;
 import static io.github.galaipa.GameErauntsiaMC.perms;
 import static io.github.galaipa.Json.irakurriJSON;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -15,7 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -116,7 +114,6 @@ public class WhiteList implements Listener {
             if(irakurriJSON("mc_user",izena).get("uuid") == null){
                 rg.add(player);
             }
-            return;
         }else{
             JSONObject orrialdea = WebAPI.web(izena);
             if(orrialdea != null){ //Ez dago zerrendan baina bai erregistratuta
@@ -188,7 +185,7 @@ public String taldea(JSONObject t){ // Zer taldetan dago jokalaria?
                p.sendMessage(ChatColor.AQUA + "             ZERBITZARIAN JOLASTEKO");
                p.sendMessage(ChatColor.YELLOW + "Bi aukera dituzu:");
                p.sendMessage(ChatColor.YELLOW + "1- /tutoriala komandoa idatzi, eta agertuko zaizkizun pausoak jarraitu");
-               p.sendMessage(ChatColor.YELLOW + "2- Youtubeko tutorial hau ikusi: Oraindik ez dago erabilgarri D: ");
+               p.sendMessage(ChatColor.YELLOW + "2- Youtubeko tutorial hau ikusi: https://goo.gl/X6FvGg ");
                p.sendMessage(ChatColor.GREEN + "");
                p.sendMessage(ChatColor.AQUA + "Admin baten laguntza behar izanez gero idatzi /laguntza <zergatia>");
                p.sendMessage(ChatColor.GREEN + "====================================================");

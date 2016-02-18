@@ -20,19 +20,18 @@ public class WebAPI {
             url = new URL(a);
             URLConnection conn = url.openConnection();
 
-            BufferedReader br = new BufferedReader(
-                               new InputStreamReader(conn.getInputStream()));
-
-            String inputLine;
-            while ((inputLine = br.readLine()) != null) {
+            try (BufferedReader br = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()))) {
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
                     //System.out.println(inputLine);
                     if(inputLine.equalsIgnoreCase("true")){
                         return true;
                     }
                     else{           
                     }
+                }
             }
-            br.close();
 
         } catch (MalformedURLException e) {
         } catch (IOException e) {
@@ -45,12 +44,12 @@ public class WebAPI {
     {
             URL url =  new URL("http://gamerauntsia.eus/api/get_minecraft_user?username=" + name);
             URLConnection urlConnection = url.openConnection();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line;
-            while ((line = bufferedReader.readLine()) != null){
-            content.append(line + "\n");
-          }
-          bufferedReader.close();
+            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
+                String line;
+                while ((line = bufferedReader.readLine()) != null){
+                    content.append(line + "\n");
+                } 
+            }
         }
         catch(Exception e){
           return null;
