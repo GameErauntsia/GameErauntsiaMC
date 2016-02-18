@@ -18,7 +18,7 @@ public class Rss {
     public static ArrayList<String> titlesBlog;
     
     
-    private static void broadcast(){
+    public static void broadcast(){
             for(Player p : Bukkit.getServer().getOnlinePlayers()){
                 if(!p.hasPermission("rss.broadcast")){
                     return;

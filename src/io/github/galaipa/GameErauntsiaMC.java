@@ -196,6 +196,9 @@ public class GameErauntsiaMC extends JavaPlugin {
                 return true;
             }
         }
+    }else  if (cmd.getName().equalsIgnoreCase("berriak")) {
+        Rss.broadcast();
+        return true;
     }
         return false;
     }

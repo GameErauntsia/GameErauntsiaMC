@@ -1,5 +1,5 @@
 name: GameErauntsiaMC
-version: 3.0
+version: 3.2
 author: galaipa
 main: io.github.galaipa.GameErauntsiaMC
 depend: [Vault,Stats]
@@ -31,6 +31,12 @@ commands:
         description: Zerbitzarian sartzeko
         usage: /login
         aliases: [sartu]
+    berriak:
+        description: Webguneko azken berriak ikusteko
+        usage: /berriak
+        aliases: []
 permissions:
     wl.erabili:
         default: op
+    rss.broadcast:
+        default: false     
