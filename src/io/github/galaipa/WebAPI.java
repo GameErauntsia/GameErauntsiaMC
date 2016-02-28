@@ -14,7 +14,7 @@ public class WebAPI {
     public static Boolean telegramBidali(String testua, String jokalaria) {
         URL url;
         try {
-            String a =  ("http://gamerauntsia.eus/api/send_mctelebot_msg/" + jokalaria +"/?text=" + testua );
+            String a =  ("http://gamerauntsia.eus/api/1.0/send_mctelebot_msg/" + jokalaria +"/?text=" + testua );
             a = a.replaceAll("\\s+", "%20");
             System.out.println(a);
             url = new URL(a);
@@ -42,7 +42,7 @@ public class WebAPI {
         StringBuilder content = new StringBuilder();
         try
     {
-            URL url =  new URL("http://gamerauntsia.eus/api/get_minecraft_user?username=" + name);
+            URL url =  new URL("http://gamerauntsia.eus/api/1.0/get_minecraft_user?username=" + name);
             URLConnection urlConnection = url.openConnection();
             try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
                 String line;

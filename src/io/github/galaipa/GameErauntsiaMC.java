@@ -26,8 +26,8 @@ public class GameErauntsiaMC extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
         WhiteList.telegram = getConfig().getBoolean("Telegram");
-        WhiteList.errorea = new Location(getServer().getWorld("World"),970,4,96);
-        WhiteList.spawn = getServer().getWorld("World").getSpawnLocation();
+        WhiteList.errorea = new Location(getServer().getWorld("Jokoak"),970,4,96);
+        WhiteList.spawn = getServer().getWorld("Jokoak").getSpawnLocation();
         setupPermissions();
         setupStatsAPI();
         Rss.SchedulerOn(this);
