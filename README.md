@@ -19,6 +19,7 @@ Adminenak:
 
     /wl telegram (Telegram jakinarazpenak gaitu / ezgaitzeko)
     /wl ezabatu <jokalaria> (Jokalaria zerrendatik ezabatzeko)
+    /wl gehitu <jokalaria> (Jokalaria zerrendara gehitzeko. Kontuz! "Larrialdietarako" bakarrik erabili)
     /wl info <jokalaria> (Jokalari baten informazio eskuratzeko)
     /wl point Spawn/Errorea (Spawn eta errore telegarraitze puntuak ezartzeko)
     /wl zerrenda (Jokalari zerrenda ikusteko)
@@ -27,8 +28,16 @@ Adminenak:
 Jokalariek batek laguntza behar duenean komando baten bitartez administratzaileei Telegram bidez abisatzeko aukera izango du. Horretarako ondorengo komandoa erabiliz:
 
     /laguntza <Zergatia>
+    
+## RSS Irakurgailua
+Webguneko azken berri eta gameplay-ak 30 minututik behin zerbitzarian erakusten ditu. Hemen adibidea:
+![alt tag](https://i.imgur.com/NkoQ54x.png)
+
+    /berriak (Manualki egiteko)
 
 ## Gainerakoak
 Pluginak ematen dizkigun beste aukera batzuk:
 
     /arauak (Zerbitzariko arauak ikusteko)
+
+    
