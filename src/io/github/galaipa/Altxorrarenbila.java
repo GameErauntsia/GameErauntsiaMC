@@ -96,7 +96,7 @@ public class Altxorrarenbila implements Listener{
                 mezua = ChatColor.YELLOW + "Zerbitzari osoan zehar ordenagailuak aurkitu beharko dituzu";
                 mezua2 = ChatColor.YELLOW + "Esate baterako Durangoko Azokako Kabia gunean aurkituko duzu lehenenengoa.";
                 break;
-            case 1: //IRUÑA: Plazan
+            case 1: //IRUA: Plazan
                 mezua = ChatColor.YELLOW + "Minik ez baduzu hartu nahi hobe duzu korrika egin, zezenak harrapatuko zaitu bestela";
                 mezua2 = ChatColor.YELLOW + "Harresiz inguratutako hiria";
                 break;
