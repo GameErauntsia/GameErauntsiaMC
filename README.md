@@ -17,11 +17,11 @@ Orrialdean erregistratzen laguntzeko:
   
 Adminenak:
 
-    /wl telegram (Telegram jakinarazpenak gaitu / ezgaitzeko)
+    /telegram (Telegram jakinarazpenak gaitu / ezgaitzeko)
+    /rss (RSS berriak gaitu / ezgaitzeko)
     /wl ezabatu <jokalaria> (Jokalaria zerrendatik ezabatzeko)
     /wl gehitu <jokalaria> (Jokalaria zerrendara gehitzeko. Kontuz! "Larrialdietarako" bakarrik erabili)
     /wl info <jokalaria> (Jokalari baten informazio eskuratzeko)
-    /wl point Spawn/Errorea (Spawn eta errore telegarraitze puntuak ezartzeko)
     /wl zerrenda (Jokalari zerrenda ikusteko)
   
 ## Laguntza
@@ -39,5 +39,6 @@ Webguneko azken berri eta gameplay-ak 30 minututik behin zerbitzarian erakusten 
 Pluginak ematen dizkigun beste aukera batzuk:
 
     /arauak (Zerbitzariko arauak ikusteko)
+    /tutoriala (Webgunean erregistratzeko eman beharreko pausoen azalpena)
 
     
