@@ -68,6 +68,7 @@ public class RssParser extends DefaultHandler
         return (this.rssFeed);
     }
    
+    @Override
     public void startElement(String uri, String localName, String qName,
             Attributes attributes)
     {
@@ -82,6 +83,7 @@ public class RssParser extends DefaultHandler
             this.imgStatus = true;
     }
    
+    @Override
     public void endElement(String uri, String localName, String qName)
     {
         if (this.rssFeed == null)

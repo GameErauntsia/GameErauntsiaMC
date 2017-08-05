@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 
 public class Rss {
@@ -17,6 +16,7 @@ public class Rss {
     
     public static ArrayList<String> titlesGame;
     public static ArrayList<String> titlesBlog;
+    public static Boolean piztuta = true;
     
     
     public static void broadcast(){
@@ -27,32 +27,32 @@ public class Rss {
             if(!p.hasPermission("rss.broadcast")){
                 return;
             }
-        p.sendMessage(ChatColor.BLUE + "Game Erauntsia: azken gameplay eta berriak");
-                for(String s : titlesBlog){
-                  p.sendMessage(ChatColor.GREEN + "[Blog-a] " + ChatColor.GOLD + s);      
-                }
-                for(String s : titlesGame){
-                  p.sendMessage(ChatColor.GREEN + "[GamePlay] " + ChatColor.GOLD + s);      
-                }
-                p.sendMessage(ChatColor.BLUE + "Ikusteko: gamerauntsia.eus");  
+            p.sendMessage(ChatColor.BLUE + "Game Erauntsia: azken gameplay eta berriak");
+            for(String s : titlesBlog){
+              p.sendMessage(ChatColor.GREEN + "[Blog-a] " + ChatColor.GOLD + s);      
+            }
+            for(String s : titlesGame){
+              p.sendMessage(ChatColor.GREEN + "[GamePlay] " + ChatColor.GOLD + s);      
+            }
+            p.sendMessage(ChatColor.BLUE + "Gehiago jakin nahi? gamerauntsia.eus");  
         }
 
     }
     public static void updateGame(){
-	titlesGame = new ArrayList<>();
-	RssParser rp = new RssParser("http://gamerauntsia.eus/rss/gameplayak");
+	RssParser rp = new RssParser("https://gamerauntsia.eus/rss/gameplayak");
 	rp.parse();
 	RssFeed feed = rp.getFeed();
         if(feed == null){
             return;
         }
 	ArrayList<Item> items = feed.getItems();
+	titlesGame = new ArrayList<>();
         for(int i=0; i<2;i++){ // Izenburua bakarrik nahi dugu
            titlesGame.add(items.get(i).title);
         }
     }
     public static void updateBlog(){
-	RssParser rp = new RssParser("http://gamerauntsia.eus/rss/bloga");
+	RssParser rp = new RssParser("https://gamerauntsia.eus/rss/bloga");
 	rp.parse();
 	RssFeed feed = rp.getFeed();
         if(feed == null){
@@ -70,9 +70,11 @@ public class Rss {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(pl, new Runnable() {
             @Override
             public void run() {
-                updateBlog();
-                updateGame();
-                broadcast();
+                if(piztuta){
+                    updateBlog();
+                    updateGame();
+                    broadcast();
+                }
             }
         }, 200, BroadcastTime);
 

@@ -1,8 +1,8 @@
 name: GameErauntsiaMC
-version: 3.3
+version: 4.0
 author: galaipa
 main: io.github.galaipa.GameErauntsiaMC
-depend: [Vault,Stats]
+depend: [Vault]
 softdepend: [Multiverse-Core]
 commands:
     wl:
@@ -35,6 +35,18 @@ commands:
         description: Webguneko azken berriak ikusteko
         usage: /berriak
         aliases: []
+    telegram:
+        description: Telegram aktibatu/desaktibatu
+        usage: /telegram
+        aliases: []
+        permission: wl.erabili
+        permission-message: Ez daukazu hori egiteko baimenik
+    rss:
+        description: RSS aktibatu/desaktibatu
+        usage: /berriak
+        aliases: []
+        permission: wl.erabili
+        permission-message: Ez daukazu hori egiteko baimenik
 permissions:
     wl.erabili:
         default: op

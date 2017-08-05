@@ -13,7 +13,7 @@ import org.json.simple.parser.ParseException;
 public class Json {
     public static String pluginFolder;
     
-    public static void idatziJSON(JSONObject obj,String jokalaria, Boolean berretsi) {
+    public static void idatzi(JSONObject obj,String jokalaria, Boolean berretsi) {
         JSONArray jokalariak = new JSONArray();
         File file = new File(pluginFolder + File.separator + "jokalariak.json");
         try{
@@ -46,12 +46,12 @@ public class Json {
             fileWriter.close(); 
             
     } catch (IOException | ParseException e) {}
-    }public static void ezabatuJSON(String jokalaria) {
+    }public static void ezabatu(String jokalaria) {
         if(jokalaria != null){
-            idatziJSON(null,jokalaria,true);
+            idatzi(null,jokalaria,true);
         }
     }
-    public static  JSONObject irakurriJSON(String gakoa, String jokalaria) {
+    public static  JSONObject bilatu(String gakoa, String jokalaria) {
         JSONArray jokalariak = new JSONArray();
         try {
           JSONParser parser = new JSONParser();
