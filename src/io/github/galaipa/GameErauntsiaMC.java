@@ -36,14 +36,14 @@ public class GameErauntsiaMC extends JavaPlugin {
             case "wl":
                 WhiteList.wlKomandoa(player,args);
                 return true;
-            case "register":
+           /* case "register":
             case "erregistratu":
                 WhiteList.erregistratu(player,args);
                 return true;
             case "login":
             case "sartu":
                 WhiteList.login(player,args);
-                return true;
+                return true;*/
             case "berriak":
                 Rss.broadcast();
                 return true;

@@ -1,19 +1,12 @@
 package io.github.galaipa;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -32,7 +25,7 @@ public class WhiteList implements Listener {
         String izena = player.getName().toLowerCase();
         if(zerrendanDago(izena)){ // ZERRENDAN BAI
             System.out.println(izena + " erabiltzailea zerrenda txurian dago");
-            if(pirataDa(izena)) autentifikatuGabe.add(player);
+          //  if(pirataDa(izena)) autentifikatuGabe.add(player);
         }
         else{ 
             JSONObject webInfo = WebAPI.web(izena); // GE webgunearekin konexioa
@@ -53,7 +46,7 @@ public class WhiteList implements Listener {
             }
         }
     }
-    @EventHandler(priority = EventPriority.LOW)
+   /* @EventHandler(priority = EventPriority.LOW)
     public void onPlayerMove(PlayerMoveEvent event) {
         Player p = event.getPlayer();
         if(autentifikatuGabe.contains(p)){
@@ -121,7 +114,7 @@ public class WhiteList implements Listener {
                 break;
             }
 }
-     }
+     }*/
 
     public void izenAldaketa(String erabiltzailea,String izenBerria, String uuidBerria){
         JSONObject jokalaria = Json.bilatu("user",erabiltzailea); 

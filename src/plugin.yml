@@ -23,14 +23,6 @@ commands:
         description: Arau zerrenda ikusteko
         usage: /arauak
         aliases: []
-    register:
-        description: Zerbitzarian erregistratzeko
-        usage: /register
-        aliases: [erregistratu]
-    login:
-        description: Zerbitzarian sartzeko
-        usage: /login
-        aliases: [sartu]
     berriak:
         description: Webguneko azken berriak ikusteko
         usage: /berriak

@@ -61,9 +61,12 @@ public class WebAPI {
         }
         try{
             String lortu = content.toString();
-            System.out.println("Content:" +lortu);
-            JSONObject jo = (JSONObject) new JSONParser().parse(lortu);
-            return jo;
+            if(!lortu.equalsIgnoreCase("false\n")){
+                System.out.println("Content:\"" +lortu+"\"");
+                JSONObject jo = (JSONObject) new JSONParser().parse(lortu);
+                return jo;
+            }
+
         }
         catch(ParseException e){
         }
